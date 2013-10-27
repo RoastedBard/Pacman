@@ -46,8 +46,24 @@ public:
 
 	Vector2& operator * (T value)
 	{
-		x*=value;
-		y*=value;
+		x *= value;
+		y *= value;
+
+		return *this;
+	}
+
+	Vector2& operator + (Vector2<T> vect)
+	{
+		x += vect.x;
+		y += vect.y;
+
+		return *this;
+	}
+
+	Vector2<T>& operator += (Vector2<T> vect)
+	{
+		x += vect.x;
+		y += vect.y;
 
 		return *this;
 	}
