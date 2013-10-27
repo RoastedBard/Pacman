@@ -32,7 +32,17 @@ namespace Type
 		WALL = 0,
 		PILL,
 		BONUS,
-		NOTHING
+		NOTHING,
+		PACMAN
+	};
+}
+
+namespace GameStates
+{
+	enum
+	{
+		GAME_RUNNING = 0,
+		GAME_PAUSED
 	};
 }
 #endif

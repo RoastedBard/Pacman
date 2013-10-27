@@ -19,43 +19,5 @@ bool Physics::isIntersects(GameObject *a, GameObject *b, Direction::Id id)
 		return false;
 
 	return true;
-
-	/*switch(id)
-	{
-	case Direction::UP:
-		if(aBb.top.y > bBb.bottom.y) 
-			return false;
-		else
-			return true;
-		break;
-
-	case Direction::DOWN:
-		if(aBb.bottom.y < bBb.top.y)
-			return false;
-		else
-			return true;
-		break;
-
-	case Direction::LEFT:
-		if(aBb.top.x > bBb.bottom.x)
-			return false;
-		else
-			return true;
-		break;
-
-	case Direction::RIGHT:
-		if(aBb.bottom.x < bBb.top.x)
-		   return false;
-		else
-			return true;
-		break;
-	case Direction::STOP:
-		if(aBb.top.y > bBb.bottom.y && aBb.bottom.y < bBb.top.y && aBb.top.x > bBb.bottom.x && aBb.bottom.x < bBb.top.x)
-			return false;
-		else
-			return true;
-	}
-
-	return false;*/
 }
 

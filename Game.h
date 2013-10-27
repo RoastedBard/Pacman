@@ -24,6 +24,15 @@ private:
 private:
 	Server _server;
 	Client _client;
+
+private:
+	struct GameState
+	{
+		int currentGameState;
+		int previousGameState;
+	};
+
+	GameState _gameState;
 };
 
 #endif

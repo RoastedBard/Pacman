@@ -4,6 +4,7 @@
 
 Game::Game(void)
 {	
+	_gameState.currentGameState = GameStates::GAME_RUNNING;
 }
 
 Game::~Game(void)
@@ -17,6 +18,7 @@ void Game::run()
 	_client.readData(_initDataFromServer);
 
 	//Инициализация полей клиента
+	_client.createWindow();
 	_client.initialize();
 
 	//Отправка инициализационных данных от клиента к серверу
@@ -34,24 +36,44 @@ void Game::run()
 		{
 			timeSinceLastUpdate -= _client.getFps();
 
-			//Обработка пользовательского ввода
-			_client.input();
+			_gameState.previousGameState = _gameState.currentGameState;
 
 			//Обработка пользовательского ввода
-			_client.processEvents();
+			_client.processEvents(_gameState.currentGameState);
+			
+			if(_gameState.previousGameState == GameStates::GAME_PAUSED && _gameState.currentGameState == GameStates::GAME_RUNNING)
+			{
+				_server.reset();
+				_server.update(_gameState.currentGameState);
 
-			//Отправка данных от клиента к серверу
-			_client.sendData(_commonDataFromClient);
-			_server.readData(_commonDataFromClient);
+				//Отправка данных от сервера к клиенту
+				_server.sendData(_initDataFromServer);
+				_client.readData(_initDataFromServer);
+				
+				_client.initialize();
+				_gameState.previousGameState = GameStates::GAME_RUNNING;
+			}
 
-			_server.update();
+			switch(_gameState.currentGameState)
+			{
+				case GameStates::GAME_RUNNING:
+					//Обработка пользовательского ввода
+					_client.input();
 
-			//Отправка данных от сервера к клиенту
-			_server.sendData(_commonDataFromServer);
-			_client.readData(_commonDataFromServer);
+					//Отправка данных от клиента к серверу
+					_client.sendData(_commonDataFromClient);
+					_server.readData(_commonDataFromClient);
+
+					_server.update(_gameState.currentGameState);
+
+					//Отправка данных от сервера к клиенту
+					_server.sendData(_commonDataFromServer);
+					_client.readData(_commonDataFromServer);
 		
-			//Обновление полей клиента
-			_client.update(_client.getFps());
+					//Обновление полей клиента
+					_client.update(_client.getFps());
+				break;
+			}
 		}
 
 		//Вывод изображения

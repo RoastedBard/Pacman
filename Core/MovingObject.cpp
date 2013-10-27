@@ -41,6 +41,35 @@ void MovingObject::setMovingVector(float x, float y)
 	_movingVector.y = y;
 }
 
+void MovingObject::setMovingVector()
+{
+	_movingVector.setXY(0.0f, 0.0f);
+
+	switch(_direction)
+	{
+		case Direction::UP:
+			_movingVector.y -= _velocity;
+			break;
+
+		case Direction::DOWN:
+			_movingVector.y += _velocity;
+			break;
+
+		case Direction::LEFT:
+			_movingVector.x -= _velocity;
+			break;
+
+		case Direction::RIGHT:
+			_movingVector.x += _velocity;
+			break;
+
+		case Direction::STOP:
+			_movingVector.setXY(0.0f, 0.0f);
+			break;
+
+	}
+}
+
 Vector2<float>	MovingObject::getMovingVector() const
 {
 	return _movingVector;

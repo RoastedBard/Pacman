@@ -1,0 +1,16 @@
+15
+###############
+#Poooooooooooo#
+#o##o#####o##o#
+#o#ooooooooo#o#
+#oooo#####oooo#
+#o#o#ooooo#o#o#
+#o#o#o#_#o#o#o#
+#o#ooo#G#ooo#o#
+#o#o#o###o#o#o#
+#o#o#ooooo#o#o#
+#oooo#####oooo#
+#o#ooooooooo#o#
+#o##o#####o##o#
+#ooooooooooooo#
+###############

@@ -1,4 +1,6 @@
 #include "Server.h"
+#include "Core\AgressiveAI.h"
+#include "Core\AmbushAI.h"
 #include <iostream>
 #include <fstream>
 #include <istream>
@@ -6,7 +8,7 @@
 
 Server::Server(void)
 {
-	loadLevel("levels/Level1.txt");
+	loadLevel("levels/LevelLikeOriginal.txt");
 }
 
 
@@ -26,6 +28,12 @@ void Server::readData(InitDataFromClient data)
 		}
 	}
 
+	for(int i = 0; i < _ghosts.size(); i++)
+	{
+		_ghosts[i].setBoundingBox(data.ghostsBoundingBoxes[i].topX,    data.ghostsBoundingBoxes[i].topY, 
+								  data.ghostsBoundingBoxes[i].bottomX, data.ghostsBoundingBoxes[i].bottomY);
+	}
+
 	_pacman.setBoundingBox(data.pacmanBoundingBox.topX,    data.pacmanBoundingBox.topY, 
 						   data.pacmanBoundingBox.bottomX, data.pacmanBoundingBox.bottomY);
 }
@@ -37,7 +45,13 @@ void Server::readData(CommonDataFromClient data)
 	_pacman.setBoundingBox(data.pacmanBoundingBox.topX,    data.pacmanBoundingBox.topY, 
 						   data.pacmanBoundingBox.bottomX, data.pacmanBoundingBox.bottomY);
 
-	_pacman.setPosition(data.pacmanPosition[0], data.pacmanPosition[1]);
+	_pacman.setPosition(data.pacmanPosition.x, data.pacmanPosition.y);
+
+	for(int i = 0; i < _ghosts.size(); i++)
+	{
+		_ghosts[i].setBoundingBox(data.ghostsBoundingBoxes[i].topX,    data.ghostsBoundingBoxes[i].topY, 
+								  data.ghostsBoundingBoxes[i].bottomX, data.ghostsBoundingBoxes[i].bottomY);
+	}
 }
 
 void Server::sendData(InitDataFromServer &data)
@@ -69,8 +83,16 @@ void Server::sendData(InitDataFromServer &data)
 		}
 	}
 
-	data.pacmanStartPoint[0] = _maze.getPacmanStartPosition().x;
-	data.pacmanStartPoint[1] = _maze.getPacmanStartPosition().y;
+	data.pacmanStartPoint.x = _maze.getPacmanStartPosition().x;
+	data.pacmanStartPoint.y = _maze.getPacmanStartPosition().y;
+
+	data.ghostPositions.resize(_ghosts.size());
+
+	for(int i = 0; i < data.ghostPositions.size(); i++)
+	{
+		data.ghostPositions[i].x = _ghosts[i].getPosition().x;
+		data.ghostPositions[i].y = _ghosts[i].getPosition().y;
+	}
 }
 
 void Server::sendData(CommonDataFromServer &data)
@@ -78,13 +100,46 @@ void Server::sendData(CommonDataFromServer &data)
 	data.cellToRedraw[0] = Logic::cellsToChange.x;
 	data.cellToRedraw[1] = Logic::cellsToChange.y;
 	data.cellToRedraw[2] = _maze(data.cellToRedraw[0], data.cellToRedraw[1]).getType();
-	data.pacmanMovingVector[0] = _pacman.getMovingVector().x;
-	data.pacmanMovingVector[1] = _pacman.getMovingVector().y;
+	data.pacmanMovingVector.x = _pacman.getMovingVector().x;
+	data.pacmanMovingVector.y = _pacman.getMovingVector().y;
+
+	data.ghostsMovingVectors.clear();
+	for(int i = 0; i < _ghosts.size(); i++)
+	{
+		data.ghostsMovingVectors.push_back(_ghosts[i].getMovingVector());
+	}
 }
 
-void Server::update()
+void Server::update(int &gameState)
 {
 	processInput();
+	for(int i = 0; i < _ghosts.size(); i++)
+	{
+		if(_ghosts[i].isPointReached())
+		{
+			_ghosts[i].seek(_maze, _pacman);
+		}
+
+		Logic::processGhostMovement(_ghosts[i], _maze);
+
+		if(_ghosts[i].getPosition() == _pacman.getPosition())
+		{
+			gameState = GameStates::GAME_PAUSED;
+
+			if(_pacman.getLife() == 0)
+			{
+				//cout<<"[]Pacman is dead!\n";
+			}
+
+			else
+			{
+				_pacman.setLife(_pacman.getLife() - 1);
+				cout<<"[]Minus one Life!\n";
+			}
+
+			break;
+		}
+	}
 }
 
 void Server::processInput()
@@ -146,25 +201,52 @@ void Server::loadLevel(const char* filename)
 			switch(str[j])
 			{
 			case '#':
-				map[j][i] = 0;
+				map[j][i] = Type::WALL;
 				break;
 
 			case 'o':
-				map[j][i] = 1;
+				map[j][i] = Type::PILL;
 				break;
 
 			case '_':
-				map[j][i] = 2;
+				map[j][i] = Type::NOTHING;
 				break;
 
 			case 'P':
-				map[j][i] = 3;
+				map[j][i] = Type::PACMAN;
 				_pacman.setPosition(j,i);
+				break;
+
+			case 'G':
+				map[j][i] = Type::NOTHING;
+				Ghost ghost;
+				ghost.setPosition(j, i);
+				_ghosts.push_back(ghost);
+
+				_maze.setGhostStartPoints(ghost.getPosition());
+
 				break;
 			}
 		}
-
 		i++;
+	}
+
+	for(int i = 0; i < _ghosts.size(); i++)
+	{
+		switch(i)
+		{
+		case 0:
+			_ghosts[i].setAI(new AgressiveAI());
+			break;
+
+		case 1:
+			_ghosts[i].setAI(new AmbushAI());
+			break;
+
+		case 2:
+			_ghosts[i].setAI(new AmbushAI());
+			break;
+		}
 	}
 
 	_maze.initMaze(map);
@@ -174,4 +256,17 @@ void Server::loadLevel(const char* filename)
 	for(int i = 0; i < _maze.getMazeSize(); i++)
 		delete[] map[i];
 	delete[] map;
+}
+
+void Server::reset()
+{
+	for (int i = 0; i < _ghosts.size(); i++)
+	{
+		_ghosts[i].setPosition(_maze.getGhostStartPoints()[i]);
+		_ghosts[i].clearWay();
+		_ghosts[i].setIsPointReached(true);
+		_ghosts[i].setDirection(Direction::STOP);
+	}
+
+	_pacman.setPosition(_maze.getPacmanStartPosition());
 }

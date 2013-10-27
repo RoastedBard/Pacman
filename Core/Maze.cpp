@@ -1,32 +1,15 @@
 #include "Maze.h"
 
+int Maze::cellPixelSize = 0;
+
 Maze::Maze(void)
 {
 
 }
 
-int Maze::cellPixelSize = 0;
-
-Maze::Maze(int size)
+Maze::~Maze(void)
 {
-	_mazeSize = size;
 
-	_maze.resize(_mazeSize);
-
-	for(int i = 0; i < _mazeSize; i++)
-		_maze[i].resize(_mazeSize);
-
-	for(int i = 0; i < _mazeSize; i++)
-	{
-		for(int j = 0; j < _mazeSize; j++)
-			{
-				if(i == 0 || i == _mazeSize - 1 || j == 0 || j == _mazeSize - 1)
-					_maze[i][j].setType(Type::WALL);
-				else
-					_maze[i][j].setType(Type::NOTHING);
-				
-			}
-	}
 }
 
 void Maze::initMaze(int** map)
@@ -42,30 +25,25 @@ void Maze::initMaze(int** map)
 		{
 			switch(map[i][j])
 			{
-			case 0:
+			case Type::WALL:
 				_maze[i][j].setType(Type::WALL);
 				break;
 
-			case 1:
+			case Type::PILL:
 				_maze[i][j].setType(Type::PILL);
 				break;
 
-			case 2:
+			case Type::NOTHING:
 				_maze[i][j].setType(Type::NOTHING);
 				break;
 
-			case 3:
+			case Type::PACMAN:
 				_pacmanStart.setXY(i,j);
 				_maze[i][j].setType(Type::NOTHING);
 				break;
 			}
 		}
 	}
-}
-
-Maze::~Maze(void)
-{
-
 }
 
 std::vector<std::vector<StaticObject>>& Maze::getMaze()
@@ -91,4 +69,14 @@ Vector2<int> Maze::getPacmanStartPosition() const
 StaticObject& Maze::operator() (int i, int j)
 {
 	return _maze[i][j];
+}
+
+std::vector<Vector2<int>> Maze::getGhostStartPoints()
+{
+	return _ghostStartPoints;
+}
+
+void Maze::setGhostStartPoints(Vector2<int> position)
+{
+	_ghostStartPoints.push_back(position);
 }

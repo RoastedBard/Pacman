@@ -9,6 +9,7 @@ class GameObject
 {
 public:
 	void		 setPosition(int x, int y);
+	void		 setPosition(Vector2<int> position);
 	Vector2<int> getPosition() const;
 	void		 setBoundingBox(Vector2<float> top, Vector2<float> bottom);
 	void		 setBoundingBox(float topX, float topY, float bottomX, float bottomY);

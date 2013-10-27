@@ -53,6 +53,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>SFML_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>D:\LIBS\SFML-2.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -60,6 +61,9 @@
       <AdditionalLibraryDirectories>D:\LIBS\SFML-2.1 VS2012\lib;D:\LIBS\SFML-2.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -80,14 +84,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp" />
+    <ClCompile Include="Core\AI.cpp" />
     <ClCompile Include="Core\BoundingBox.cpp" />
     <ClCompile Include="Core\CellContent.cpp" />
+    <ClCompile Include="Core\AgressiveAI.cpp" />
     <ClCompile Include="Core\GameObject.cpp" />
+    <ClCompile Include="Core\Ghost.cpp" />
     <ClCompile Include="Core\Logic.cpp" />
     <ClCompile Include="Core\Maze.cpp" />
     <ClCompile Include="Core\MovingObject.cpp" />
     <ClCompile Include="Core\Pacman.cpp" />
     <ClCompile Include="Core\Physics.cpp" />
+    <ClCompile Include="Core\AmbushAI.cpp" />
     <ClCompile Include="Core\StaticObject.cpp" />
     <ClCompile Include="Core\Vector2.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -96,17 +104,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h" />
+    <ClInclude Include="Core\AI.h" />
     <ClInclude Include="Core\AStarSpecific\WayNode.h" />
     <ClInclude Include="Core\AStarSpecific\WayPoint.h" />
     <ClInclude Include="Core\BoundingBox.h" />
     <ClInclude Include="Core\CellContent.h" />
+    <ClInclude Include="Core\AgressiveAI.h" />
     <ClInclude Include="Core\Enums.h" />
     <ClInclude Include="Core\GameObject.h" />
+    <ClInclude Include="Core\Ghost.h" />
     <ClInclude Include="Core\Logic.h" />
     <ClInclude Include="Core\Maze.h" />
     <ClInclude Include="Core\MovingObject.h" />
     <ClInclude Include="Core\Pacman.h" />
     <ClInclude Include="Core\Physics.h" />
+    <ClInclude Include="Core\AmbushAI.h" />
     <ClInclude Include="Core\StaticObject.h" />
     <ClInclude Include="Core\Vector2.h" />
     <ClInclude Include="DataFromServerAndClient.h" />
@@ -115,7 +127,9 @@
     <ClInclude Include="Server.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

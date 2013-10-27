@@ -12,10 +12,9 @@ public:
 	void setScore(int score);
 	int  getScore() const;
 	void setRealWidth(int width);
-	int getRealWidth() const;
+	int  getRealWidth() const;
 	void setRealHeight(int height);
-	int getRealHeight() const;
-	virtual void setMovingVector() override;
+	int  getRealHeight() const;
 
 public:
 	Pacman(void);

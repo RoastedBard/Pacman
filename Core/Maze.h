@@ -8,8 +8,9 @@ class Maze
 {
 private:
 	std::vector<std::vector<StaticObject>> _maze;
-	int			   _mazeSize;
-	Vector2<int>   _pacmanStart;
+	int									   _mazeSize;
+	Vector2<int>						   _pacmanStart;
+	std::vector<Vector2<int>>			   _ghostStartPoints;
 
 public:
 	static int cellPixelSize;
@@ -17,7 +18,6 @@ public:
 public:
 
 	Maze(void);
-	Maze(int size);
 	~Maze(void);
 
 	void		   initMaze(int** map);
@@ -25,6 +25,8 @@ public:
 	int			   getMazeSize() const;
 	void		   setMazeSize(int size);
 	Vector2<int>   getPacmanStartPosition() const;
+	std::vector<Vector2<int>> getGhostStartPoints();
+	void					  setGhostStartPoints(Vector2<int> position);
 
 	StaticObject& operator() (int i, int j);
 };

@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Client">
+    <Position X="19.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAggEgRgwAYAAIAAkQAAAgQQBAABgAAAEhGgBUACQ=</HashCode>
+      <FileName>Client.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Game">
+    <Position X="16.5" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Struct Name="Game::GameState" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Game.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAABAAAEAQQAAAAAAAAAmAAAAAAwAAAAAAAAA=</HashCode>
+      <FileName>Game.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Server">
+    <Position X="13.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgCEEAAAAAAAAAAQCgCAAAAAAAAAAAAABAiAEAAA=</HashCode>
+      <FileName>Server.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AI">
+    <Position X="8" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAACACAAAAAgAABAAAAgAABAAACAAA=</HashCode>
+      <FileName>Core\AI.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoundingBox">
+    <Position X="7.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAABAAAAAIAAgAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\BoundingBox.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CellContent">
+    <Position X="1.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAACAAAAAAAAAAA=</HashCode>
+      <FileName>Core\CellContent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AgressiveAI">
+    <Position X="7" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAEAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\AgressiveAI.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameObject">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAIAAAAQAAAgAAAiAAAAACEAAAAAAgAAAAgAIAAAA=</HashCode>
+      <FileName>Core\GameObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ghost">
+    <Position X="5.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAhKEAAAAAIYgRAAAAAAAAAAAAAAAAEAAEFABAAAAA=</HashCode>
+      <FileName>Core\Ghost.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Logic">
+    <Position X="6" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQACAEAAAAAA=</HashCode>
+      <FileName>Core\Logic.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Maze">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgACgAAAAAAEAAAhAAAgAIgAAIAACAAEAYAAQA=</HashCode>
+      <FileName>Core\Maze.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MovingObject">
+    <Position X="4.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAgAAgAAAIABgAAAAAAAAAAABAAAIAAAABIAAAAAAg=</HashCode>
+      <FileName>Core\MovingObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pacman">
+    <Position X="3" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAFgAAAAEAAAAAAgAACAiAgABQAAABIAA=</HashCode>
+      <FileName>Core\Pacman.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Physics">
+    <Position X="6" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Physics.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AmbushAI">
+    <Position X="9" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAACAAAAAAAAAAAAACAAAQAAAAAAAA=</HashCode>
+      <FileName>Core\AmbushAI.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StaticObject">
+    <Position X="1.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAQIAAAAAAAAARAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\StaticObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vector2&lt;T&gt;">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAQAAAAAAAAAAAABgAAAAAAA=</HashCode>
+      <FileName>Core\Vector2.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="InitDataFromClient">
+    <Position X="17.5" Y="6.75" Width="1.5" />
+    <NestedTypes>
+      <Struct Name="InitDataFromClient::BoundingBox" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DataFromServerAndClient.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Struct Name="InitDataFromClient::GhostBounds" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DataFromServerAndClient.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>gAAAAgAAAAAAAAAAAAABAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataFromServerAndClient.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="CommonDataFromClient">
+    <Position X="15.75" Y="4.25" Width="1.5" />
+    <NestedTypes>
+      <Struct Name="CommonDataFromClient::BoundingBox" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DataFromServerAndClient.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Struct Name="CommonDataFromClient::GhostBounds" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DataFromServerAndClient.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAACAAAAAAAAABAAAEAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>DataFromServerAndClient.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="InitDataFromServer">
+    <Position X="15.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAGAAAAAAAAAAAAAQAAAAAAAEAAAAAAAAAgAAAA=</HashCode>
+      <FileName>DataFromServerAndClient.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="CommonDataFromServer">
+    <Position X="17.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAEAAAAAAAAAAAAAAAAAAAAAAEAAAAABAAAAA=</HashCode>
+      <FileName>DataFromServerAndClient.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="WayNode">
+    <Position X="9.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAIIAAABAAAAQAAQQAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\AStarSpecific\WayNode.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="WayPoint">
+    <Position X="11.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAQAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\AStarSpecific\WayPoint.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="Key">
+    <Position X="11.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAgAAAAAAAAAAAAAAAABAAAAAAgAAAAAAAAgAAA=</HashCode>
+      <FileName>DataFromServerAndClient.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Textures::Id">
+    <Position X="9.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEgAAAAAAAAAgAAAAAACAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Enums.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Direction::Id">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAgAAAAAAAAAAAAICAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Enums.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Type::Id">
+    <Position X="9.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAACAAAgAAAAAACAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Enums.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="GameStates::__unnamed_enum_0009_1">
+    <Position X="11.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Core\Enums.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -11,7 +11,7 @@ public:
 	float		   getVelocity() const;
 	void		   setDirection(Direction::Id direction);
 	Direction::Id  getDirection() const;
-	virtual void   setMovingVector() = 0;
+	void		   setMovingVector();
 	virtual void   setMovingVector(Vector2<float> movingVector);
 	void		   setMovingVector(float x, float y);
 	Vector2<float> getMovingVector() const;

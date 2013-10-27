@@ -15,4 +15,11 @@ struct WayPoint
 		m_y = y;
 		direction = -1;
 	}
+
+	WayPoint(int x, int y, int dir)
+	{
+		m_x = x;
+		m_y = y;
+		direction = dir;
+	}
 };

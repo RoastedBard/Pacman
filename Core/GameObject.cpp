@@ -16,6 +16,11 @@ void GameObject::setPosition(int x, int y)
 	_position.y = y;
 }
 
+void GameObject::setPosition(Vector2<int> position)
+{
+	_position = position;
+}
+
 Vector2<int> GameObject::getPosition() const
 {
 	return _position;

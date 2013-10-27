@@ -4,6 +4,8 @@
 #include "Core\Pacman.h"
 #include "Core\Maze.h"
 #include "Core\Logic.h"
+#include "Core\Ghost.h"
+#include "Core\Enums.h"
 #include "DataFromServerAndClient.h"
 
 class Server
@@ -15,9 +17,10 @@ public:
 	void sendData(CommonDataFromServer &data);
 
 public:
-	void   update();
+	void   update(int &gameState);
 	void   processInput();			
 	void   loadLevel(const char *filename);
+	void   reset();
 
 public:
 	Server(void);
@@ -29,6 +32,7 @@ private:
 private:
 	Pacman _pacman;
 	Maze   _maze;
+	std::vector<Ghost>  _ghosts;
 };
 
 #endif

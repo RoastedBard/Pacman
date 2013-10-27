@@ -60,32 +60,3 @@ int  Pacman::getRealHeight() const
 {
 	return _realHeight;
 }
-
-void Pacman::setMovingVector()
-{
-	_movingVector.setXY(0.0f, 0.0f);
-
-	switch(_direction)
-	{
-		case Direction::UP:
-			_movingVector.y -= _velocity;
-			break;
-
-		case Direction::DOWN:
-			_movingVector.y += _velocity;
-			break;
-
-		case Direction::LEFT:
-			_movingVector.x -= _velocity;
-			break;
-
-		case Direction::RIGHT:
-			_movingVector.x += _velocity;
-			break;
-
-		case Direction::STOP:
-			_movingVector.setXY(0.0f, 0.0f);
-			break;
-
-	}
-}

@@ -2,6 +2,8 @@
 #define DATAFROMSERVERANDCLIENT_H_
 
 #include <vector>
+#include "Core\Vector2.h"
+
 using namespace std;
 
 enum Key
@@ -19,25 +21,6 @@ enum DataType
 	COMMON_DATA
 };
 
-//struct ClientData
-//{
-//	struct BoundingBox
-//	{
-//		float topX;
-//		float topY;
-//		float bottomX;
-//		float bottomY;
-//
-//		void setBoundingBox(float topx,	float topy, float bottomx, float bottomy)
-//		{
-//			this->topX = topx;		 this->topY = topy;
-//			this->bottomX = bottomx; this->bottomY = bottomy;
-//		}
-//	};
-//
-//	BoundingBox	pacmanBoundingBox;
-//};
-
 struct InitDataFromClient 
 {
 	struct BoundingBox
@@ -54,21 +37,25 @@ struct InitDataFromClient
 		}
 	};
 
+	struct GhostBounds
+	{
+		Vector2<float> upOrLeft;
+		Vector2<float> downOrRight;
+	};
+
 	BoundingBox	pacmanBoundingBox;
 	vector<vector<BoundingBox>> cellBoundingBoxes;
-	//BoundingBox **cellBoundingBoxes;
+	vector<BoundingBox> ghostsBoundingBoxes;
 
 	InitDataFromClient()
 	{
 		pacmanBoundingBox.setBoundingBox(0,0,0,0);
-		//cellBoundingBoxes.resize(0);
-		
 	}
 };
 
 struct CommonDataFromClient 
 {
-		struct BoundingBox
+	struct BoundingBox
 	{
 		float topX;
 		float topY;
@@ -82,36 +69,37 @@ struct CommonDataFromClient
 		}
 	};
 
+	struct GhostBounds
+	{
+		Vector2<float> upOrLeft;
+		Vector2<float> downOrRight;
+	};
+
 	BoundingBox	pacmanBoundingBox;
 	int	  keyPressed;
-	int	  pacmanPosition[2];
+	Vector2<int>  pacmanPosition;
+	vector<BoundingBox> ghostsBoundingBoxes;
 
 	CommonDataFromClient()
 	{
 		pacmanBoundingBox.setBoundingBox(0,0,0,0);
 		keyPressed = 0;
-		pacmanPosition[0] = 0;
-		pacmanPosition[1] = 0;
+		pacmanPosition.setXY(0, 0);
 	}
 };
-
-//struct ServerData
-//{
-//	
-//};
 
 struct InitDataFromServer 
 {
 	vector<vector<int>> mazeCellIds;
-	//int **mazeCellIds;;
-	int pacmanStartPoint[2];
+
+	vector<Vector2<int>> ghostPositions;
+
+	Vector2<int> pacmanStartPoint;
 	int mazeSize;
 
 	InitDataFromServer()
 	{
-		//mazeCellIds.resize(0);
-		pacmanStartPoint[0] = 0;
-		pacmanStartPoint[1] = 0;
+		pacmanStartPoint.setXY(0, 0);
 		mazeSize = 0;
 	}
 };
@@ -119,7 +107,9 @@ struct InitDataFromServer
 struct CommonDataFromServer 
 {
 	int	  cellToRedraw[3];
-	float pacmanMovingVector[2];
+	Vector2<float> pacmanMovingVector;
+
+	vector<Vector2<float>> ghostsMovingVectors;
 
 	CommonDataFromServer()
 	{
@@ -127,8 +117,7 @@ struct CommonDataFromServer
 		cellToRedraw[1] = 0;
 		cellToRedraw[2] = 0;
 
-		pacmanMovingVector[0] = 0;
-		pacmanMovingVector[1] = 0;
+		pacmanMovingVector.setXY(0.f, 0.f);
 	}
 };
 

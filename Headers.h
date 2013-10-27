@@ -1,3 +1,2 @@
-#include "Client.h"
-#include "Server.h"
-#include "DataTypes.h"
+#include "AI.h"
+#include "Ghost.h"

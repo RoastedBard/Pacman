@@ -1,12 +1,10 @@
 #include "Client.h"
+#include "Core\Enums.h"
 #include <iostream>
 #include <fstream>
 #include <istream>
 
 Client::Client(void)
-	:_screenWidth(600),
-	 _screenHeight(600),
-	 _window(sf::VideoMode(_screenWidth, _screenHeight), "Pacman 0.0.1")
 {
 	_fps = sf::seconds(1.f / 60.f);
 
@@ -25,6 +23,8 @@ Client::Client(void)
 	_nothingTexture.loadFromFile("media/floor.png");
 
 	_pacmanTexture.loadFromFile("media/pacman.png");
+
+	_ghostTexture.loadFromFile("media/ghost.png");
 }
 
 
@@ -48,8 +48,13 @@ void Client::readData(InitDataFromServer data)
 		}
 	}
 
-	_pacmanStartPoint[0] = data.pacmanStartPoint[0];
-	_pacmanStartPoint[1] = data.pacmanStartPoint[1];
+	_pacmanStartPoint.x = data.pacmanStartPoint.x;
+	_pacmanStartPoint.y = data.pacmanStartPoint.y;
+
+	for(int i = 0; i < data.ghostPositions.size(); i++)
+	{
+		_ghostsStartPoint.push_back(data.ghostPositions[i]);
+	}
 }
 
 void Client::readData(CommonDataFromServer data)
@@ -58,8 +63,14 @@ void Client::readData(CommonDataFromServer data)
 	_cellToRedraw[1] = data.cellToRedraw[1];
 	_cellToRedraw[2] = data.cellToRedraw[2];
 
-	_pacmanMovingVector[0] = data.pacmanMovingVector[0];
-	_pacmanMovingVector[1] = data.pacmanMovingVector[1];
+	_pacmanMovingVector.x = data.pacmanMovingVector.x;
+	_pacmanMovingVector.y = data.pacmanMovingVector.y;
+
+	_ghostsMovingVectors.clear();
+	for(int i = 0; i < data.ghostsMovingVectors.size(); i++)
+	{
+		_ghostsMovingVectors.push_back(data.ghostsMovingVectors[i]);
+	}
 }
 
 void Client::sendData(InitDataFromClient &data)
@@ -99,6 +110,15 @@ void Client::sendData(InitDataFromClient &data)
 			}
 		}
 	}
+
+	data.ghostsBoundingBoxes.resize(_ghostSprites.size());
+
+	for(int i = 0; i < _ghostSprites.size(); i++)
+	{
+		data.ghostsBoundingBoxes[i].setBoundingBox(_ghostSprites[i].getGlobalBounds().left / _cellPixelSize, _ghostSprites[i].getGlobalBounds().top / _cellPixelSize,
+												  (_ghostSprites[i].getGlobalBounds().left + _ghostSprites[i].getLocalBounds().width)/ _cellPixelSize,
+												  (_ghostSprites[i].getGlobalBounds().top + _ghostSprites[i].getLocalBounds().height)/ _cellPixelSize);
+	}
 }
 
 void Client::sendData(CommonDataFromClient &data)
@@ -108,15 +128,28 @@ void Client::sendData(CommonDataFromClient &data)
 										  _pacmanSprite.getGlobalBounds().left + _pacmanSprite.getLocalBounds().width,
 										  _pacmanSprite.getGlobalBounds().top +  _pacmanSprite.getLocalBounds().height);
 
-	data.pacmanPosition[0] = _pacmanSprite.getPosition().x / _cellPixelSize;
-	data.pacmanPosition[1] = _pacmanSprite.getPosition().y / _cellPixelSize;
+	data.pacmanPosition.setXY(_pacmanSprite.getPosition().x / _cellPixelSize, _pacmanSprite.getPosition().y / _cellPixelSize);
+
+	data.ghostsBoundingBoxes.resize(_ghostSprites.size());
+
+	for(int i = 0; i < _ghostSprites.size(); i++)
+	{
+		data.ghostsBoundingBoxes[i].setBoundingBox(_ghostSprites[i].getGlobalBounds().left / _cellPixelSize, _ghostSprites[i].getGlobalBounds().top / _cellPixelSize,
+												  (_ghostSprites[i].getGlobalBounds().left + _ghostSprites[i].getLocalBounds().width)/ _cellPixelSize,
+												  (_ghostSprites[i].getGlobalBounds().top + _ghostSprites[i].getLocalBounds().height)/ _cellPixelSize);
+	}
+}
+
+void Client::createWindow()
+{
+	_screenHeight = _mazeSize * _cellPixelSize;
+	_screenWidth  = _mazeSize * _cellPixelSize;
+
+	_window.create(sf::VideoMode(_screenWidth, _screenHeight), "Pacman 0.0.1");
 }
 
 void Client::initialize()
 {
-	_cellPixelSize	 = _screenWidth / _mazeSize;
-	_pacmanPixelSize = (86.7 * _cellPixelSize) / 100;
-
 	_levelSprites.resize(_mazeSize);
 	for(int i = 0; i < _mazeSize; i++)
 		_levelSprites[i].resize(_mazeSize);
@@ -156,10 +189,21 @@ void Client::initialize()
 		}
 	}
 
+	_ghostSprites.resize(_ghostsStartPoint.size());
+
+	for(int i = 0; i < _ghostSprites.size(); i++)
+	{
+		_ghostSprites[i].setTexture(_ghostTexture);
+		_ghostSprites[i].setPosition(_ghostsStartPoint[i].x * _cellPixelSize, _ghostsStartPoint[i].y * _cellPixelSize);
+		//_ghostSprites[i].setOrigin(_ghostSprites[i].getLocalBounds().width / 2, _ghostSprites[i].getLocalBounds().height / 2);
+	}
+
 	_pacmanSprite.setTexture(_pacmanTexture);
-	_pacmanSprite.setPosition(_pacmanStartPoint[0] * _cellPixelSize + _cellPixelSize/2, _pacmanStartPoint[1] * _cellPixelSize + _cellPixelSize/2);
+	_pacmanSprite.setPosition(_pacmanStartPoint.x * _cellPixelSize + _cellPixelSize/2, _pacmanStartPoint.y * _cellPixelSize + _cellPixelSize/2);
 	_pacmanSprite.setScale(_pacmanPixelSize / _pacmanSprite.getLocalBounds().width, _pacmanPixelSize / _pacmanSprite.getLocalBounds().height);
 	_pacmanSprite.setOrigin(_pacmanSprite.getLocalBounds().width / 2, _pacmanSprite.getLocalBounds().height / 2);
+
+	_ghostsStartPoint.clear();
 }
 
 void Client::update(sf::Time deltaTime)
@@ -184,16 +228,23 @@ void Client::update(sf::Time deltaTime)
 	_levelSprites[_cellToRedraw[0]][_cellToRedraw[1]].setPosition(_cellToRedraw[0] * _cellPixelSize, 
 																  _cellToRedraw[1] * _cellPixelSize);
 
-	sf::Vector2f movement(_pacmanMovingVector[0], _pacmanMovingVector[1]);
+	sf::Vector2f movement(_pacmanMovingVector.x, _pacmanMovingVector.y);
 
 	_pacmanSprite.move(movement * deltaTime.asSeconds());
+
+	for(int i = 0; i < _ghostSprites.size(); i++)
+	{
+		movement.x = _ghostsMovingVectors[i].x;
+		movement.y = _ghostsMovingVectors[i].y;
+		_ghostSprites[i].move(movement * deltaTime.asSeconds());
+	}
 }	 
 	 
 void Client::render()
 {	 
 	 _window.clear();
 
-	 for (int i = 0; i < _levelSprites.size(); i++)
+	for (int i = 0; i < _levelSprites.size(); i++)
 	{
 		for (int j = 0; j < _levelSprites.size(); j++)
 		{
@@ -202,10 +253,16 @@ void Client::render()
 	}
 
 	_window.draw(_pacmanSprite);
+
+	for(int i = 0; i < _ghostSprites.size(); i++)
+	{
+		_window.draw(_ghostSprites[i]);
+	}
+
 	_window.display();
 }	 
 	 
-void Client::processEvents()
+void Client::processEvents(int &gameState)
 {
 	sf::Event windowEvent;
 
@@ -216,6 +273,10 @@ void Client::processEvents()
 		case sf::Event::KeyPressed:
 			if(windowEvent.key.code == sf::Keyboard::Escape)
 				_window.close();
+
+			if(windowEvent.key.code == sf::Keyboard::Space)
+				gameState = GameStates::GAME_RUNNING;
+
 			break;
 
 		case sf::Event::KeyReleased:
