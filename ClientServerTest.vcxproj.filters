@@ -81,6 +81,15 @@
     <ClCompile Include="Core\AmbushAI.cpp">
       <Filter>Core\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Core\BoxCollider.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Collider.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\SphereCollider.cpp">
+      <Filter>Core\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -147,6 +156,15 @@
       <Filter>Core\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Core\AmbushAI.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\BoxCollider.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Collider.h">
+      <Filter>Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\SphereCollider.h">
       <Filter>Core\Header Files</Filter>
     </ClInclude>
   </ItemGroup>

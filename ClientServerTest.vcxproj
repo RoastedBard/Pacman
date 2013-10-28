@@ -86,8 +86,10 @@
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Core\AI.cpp" />
     <ClCompile Include="Core\BoundingBox.cpp" />
+    <ClCompile Include="Core\BoxCollider.cpp" />
     <ClCompile Include="Core\CellContent.cpp" />
     <ClCompile Include="Core\AgressiveAI.cpp" />
+    <ClCompile Include="Core\Collider.cpp" />
     <ClCompile Include="Core\GameObject.cpp" />
     <ClCompile Include="Core\Ghost.cpp" />
     <ClCompile Include="Core\Logic.cpp" />
@@ -96,6 +98,7 @@
     <ClCompile Include="Core\Pacman.cpp" />
     <ClCompile Include="Core\Physics.cpp" />
     <ClCompile Include="Core\AmbushAI.cpp" />
+    <ClCompile Include="Core\SphereCollider.cpp" />
     <ClCompile Include="Core\StaticObject.cpp" />
     <ClCompile Include="Core\Vector2.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -108,8 +111,10 @@
     <ClInclude Include="Core\AStarSpecific\WayNode.h" />
     <ClInclude Include="Core\AStarSpecific\WayPoint.h" />
     <ClInclude Include="Core\BoundingBox.h" />
+    <ClInclude Include="Core\BoxCollider.h" />
     <ClInclude Include="Core\CellContent.h" />
     <ClInclude Include="Core\AgressiveAI.h" />
+    <ClInclude Include="Core\Collider.h" />
     <ClInclude Include="Core\Enums.h" />
     <ClInclude Include="Core\GameObject.h" />
     <ClInclude Include="Core\Ghost.h" />
@@ -119,6 +124,7 @@
     <ClInclude Include="Core\Pacman.h" />
     <ClInclude Include="Core\Physics.h" />
     <ClInclude Include="Core\AmbushAI.h" />
+    <ClInclude Include="Core\SphereCollider.h" />
     <ClInclude Include="Core\StaticObject.h" />
     <ClInclude Include="Core\Vector2.h" />
     <ClInclude Include="DataFromServerAndClient.h" />
